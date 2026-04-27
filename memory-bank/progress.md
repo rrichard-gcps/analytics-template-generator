@@ -19,15 +19,15 @@
 - Created this memory-bank structure.
 - **Phase 0 complete**: Produced architecture inventory of `app.R`.
 - **Phase 1 complete**: Created `R/theme_registry.R` (4 themes), `R/metric_registry.R` (10 metrics), `R/demo_data_k12.R` (5 deterministic datasets). All verified with `Rscript` sourcing.
+- **Phase 2 complete**: Created `R/template_registry.R` with BOE Area Snapshot template (8 sections, 6 KPI metrics, layout defaults, audience/context metadata). Verified with `Rscript` sourcing.
 
 ## In Progress
 
-- Preparing the project for Phase 2 (Template Registry).
+- Preparing the project for Phase 3 (Component Registry).
 
 ## Not Started
 
 - Extracting constants from `app.R`.
-- Creating `R/template_registry.R`.
 - Creating `R/component_registry.R`.
 - Wiring template selection into the UI.
 - Building BOE Area Snapshot preview.
