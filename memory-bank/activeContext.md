@@ -4,43 +4,35 @@
 
 Evolve Dashboard Layout Architect into a K–12 Dashboard Architect.
 
-Phases 0, 1, and 2 are complete. The project now has four registry files in `R/` alongside the monolithic `app.R`.
+Phases 0–3 are complete. The project now has five registry/data files in `R/` alongside the monolithic `app.R`.
 
 ## Completed Phases
 
 - **Phase 0**: Architecture inventory of `app.R` (2,159 lines). Identified all function locations, config structure, and extraction priorities.
 - **Phase 1**: Created `R/theme_registry.R` (4 themes), `R/metric_registry.R` (10 metrics), `R/demo_data_k12.R` (5 deterministic datasets). All verified via `Rscript` sourcing. No changes to `app.R`.
 - **Phase 2**: Created `R/template_registry.R` with BOE Area Snapshot template. 8 sections (header, filter_bar, kpi_row, map, school_table, trend, student_groups, source_footer), 6 KPI metrics, layout defaults, audience/context metadata. Verified via `Rscript` sourcing.
+- **Phase 3**: Created `R/component_registry.R` with 12 component entries and 12 placeholder render functions. All return deterministic HTML using inline styles. Verified with `Rscript` sourcing and HTML output testing.
 
 ## Current Priority
 
-**Phase 3**: Create `R/component_registry.R` with component entries mapping component IDs to placeholder render/export functions. Do not modify existing app behavior.
+**Phase 4**: Wire template/theme/audience controls into the existing `app.R` sidebar. Add `source()` calls for the new R/ files. Minimal disruption to existing behavior.
 
 ## Next Cline Prompt
 
 ```text
-Implement Phase 3 only.
+Implement Phase 4 only.
 
-Create R/component_registry.R.
+Wire the new registries into app.R:
 
-Add registry entries for:
-- dashboard_header
-- nav_tabs
-- filter_bar
-- kpi_row
-- metric_selector_card
-- trend_chart_placeholder
-- student_group_comparison
-- map_school_points
-- school_summary_table
-- metric_matrix_table
-- source_footer
-- disclosure_note
+1. Add source() calls at the top of app.R for all 5 R/ files
+2. Add a template selector dropdown to the sidebar (populated from template_registry)
+3. When BOE Area Snapshot is selected, show a summary of its sections in the sidebar
+4. Preserve all existing app behavior (layout controls, preview, export)
 
-Add placeholder render functions only if needed.
-Do not wire them into app.R yet.
+Do not change the preview renderer yet.
+Do not add new export logic.
 
-After editing, summarize how components will connect to templates.
+After editing, confirm the app still starts and the template dropdown appears.
 ```
 
 ## Working Assumptions
