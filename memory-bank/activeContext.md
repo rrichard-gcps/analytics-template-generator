@@ -4,65 +4,33 @@
 
 Evolve Dashboard Layout Architect into a K–12 Dashboard Architect.
 
-The immediate goal is to make the project easier for a coding assistant to work with by adding a memory bank, reducing prompt size, and breaking future work into small phases.
+Phases 0–5 are complete. The project now has six R/ files alongside the monolithic `app.R`, with a working BOE Snapshot preview tab.
 
-## Current Problem
+## Completed Phases
 
-A large Cline prompt failed with:
-
-```text
-Invalid API Response: The provider returned an empty or unparsable response.
-```
-
-Likely cause:
-
-- The prompt asked for too much in one pass.
-- The project is large and monolithic.
-- Cline/tool-calling context likely overloaded.
-- The provider/model may have returned invalid or empty output.
-
-## Current Recovery Strategy
-
-Use small phased prompts.
-
-Do not ask Cline to "build the next version" in one task.
-
-Recommended next tasks:
-
-1. Inventory only; no edits.
-2. Create registry files only.
-3. Add BOE Area Snapshot template only.
-4. Wire one template selector only.
-5. Build one preview renderer only.
-6. Export one Shiny scaffold only.
+- **Phase 0**: Architecture inventory of `app.R` (2,159 lines). Identified all function locations, config structure, and extraction priorities.
+- **Phase 1**: Created `R/theme_registry.R` (4 themes), `R/metric_registry.R` (10 metrics), `R/demo_data_k12.R` (5 deterministic datasets). All verified via `Rscript` sourcing. No changes to `app.R`.
+- **Phase 2**: Created `R/template_registry.R` with BOE Area Snapshot template. 8 sections (header, filter_bar, kpi_row, map, school_table, trend, student_groups, source_footer), 6 KPI metrics, layout defaults, audience/context metadata. Verified via `Rscript` sourcing.
+- **Phase 3**: Created `R/component_registry.R` with 12 component entries and 12 placeholder render functions. All return deterministic HTML using inline styles. Verified with `Rscript` sourcing and HTML output testing.
+- **Phase 4/5**: Created `R/boe_preview.R` with template-driven renderer. Added "BOE Snapshot" tab to `app.R` with theme/template selectors and zoom. All 8 sections render deterministically. Existing app behavior preserved.
 
 ## Current Priority
 
-Build durable context files in `memory-bank/`, then ask Cline to inspect the project and produce an inventory without editing.
+**Phase 6**: Export scaffold — generate a runnable Shiny app or Quarto document from the BOE template.
 
 ## Next Cline Prompt
 
 ```text
-Read the memory-bank files first. Then inspect the project files that are not ignored.
+Implement Phase 6 only.
 
-Do not modify files yet.
+Add export buttons to the BOE Snapshot tab:
 
-Your task is only to produce a concise inventory of the current app structure.
+1. Add a "Download HTML" button that exports the full BOE preview as a standalone HTML file
+2. Add a "Copy HTML" button
+3. Optionally add a "Download R Scaffold" button for a Shiny app scaffold
 
-Focus on:
-1. Where DEFAULT_CONFIG is defined
-2. Where build_config() is defined
-3. Where CSS is generated
-4. Where preview HTML is generated
-5. Where Shiny code export is generated
-6. Which functions should be extracted first
-
-Return:
-- a short architecture summary
-- a proposed 5-step refactor plan
-- the first 3 files you recommend creating
-
-Do not write code yet.
+Do not modify existing export tabs.
+Do not add Promise Schools or Assessment templates yet.
 ```
 
 ## Working Assumptions
