@@ -119,6 +119,14 @@ function renderPalette(){
   const aa=pal.filter(p=>T.contrastWhite(p.hex)>=4.5).length;
   const extra=state.type==="categorical"?` · ${T.CAT_SETS[state.catSet].label}`:"";
   $("#dMeta").textContent=`${pal.length} stops · ${aa} meet AA on white · source ${sourceColor()}${extra}`;
+
+  renderAccent();
+}
+
+/* ---------- Accent chip row (lives in Palette tab) ---------- */
+function renderAccent(){
+  const ar=$("#accentRow");if(!ar)return;ar.innerHTML='';
+  T.accentOptions().forEach(a=>{const b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',a.id===state.accent);b.innerHTML=`<span class="dot" style="background:${a.hex}"></span><span class="nm" style="text-transform:none">${a.label}</span>`;b.onclick=()=>{state.accent=a.id;render();};ar.appendChild(b);});
 }
 
 /* ---------- TAB: typography ---------- */
@@ -160,8 +168,7 @@ function renderSurfaces(){
   const s=surf();
   const toks=[["canvas",s.canvas],["surface",s.surface],["sunken",s.sunken],["border",s.border],["border-strong",s.borderStrong],["text",s.text],["text-2",s.text2],["text-3",s.text3],["accent",accentHex()]];
   $("#tokenGrid").innerHTML=toks.map(([r,h])=>`<div class="token"><div class="chip" style="background:${h}"></div><div class="tb"><div class="role">${r}</div><div class="hx">${h.toUpperCase()}</div></div></div>`).join('');
-  const ar=$("#accentRow");ar.innerHTML='';
-  T.accentOptions().forEach(a=>{const b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',a.id===state.accent);b.innerHTML=`<span class="dot" style="background:${a.hex}"></span><span class="nm" style="text-transform:none">${a.label}</span>`;b.onclick=()=>{state.accent=a.id;render();};ar.appendChild(b);});
+  renderAccent();
   const SP=[["--s1","4px"],["--s2","8px"],["--s3","12px"],["--s4","16px"],["--s5","24px"],["--s6","32px"],["--s7","48px"],["--s8","64px"]];
   $("#spaceScale").innerHTML=SP.map(([n,v])=>`<div class="space-row"><span class="name">${n}</span><span class="val">${v}</span><div class="bar" style="width:${v}"></div></div>`).join('');
 }
